@@ -23,7 +23,7 @@ $password = [
                 <div class="d-flex justify-content-center py-4">
                     <a href="index.html" class="logo d-flex align-items-center w-auto">
                         <img src="assets/img/logo.png" alt="">
-                        <span class="d-none d-lg-block">Maido Shop</span>
+                        <span class="d-none d-lg-block">Toko</span>
                     </a>
                 </div><!-- End Logo -->
 

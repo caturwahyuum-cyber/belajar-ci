@@ -4,7 +4,6 @@ if (uri_string() != "") {
     $hlm = ucwords(uri_string());
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +11,7 @@ if (uri_string() != "") {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>- Catur Wahyu Mulyanto - <?php echo $hlm ?></title>
+    <title>- Toko - <?php echo $hlm ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -47,9 +46,7 @@ if (uri_string() != "") {
 
 <body>
 
-    <!-- ======= Header ======= -->
     <?= $this->include('components/header') ?>
-    <!-- End Header -->
 
     <?= $this->include('components/sidebar') ?>
 
@@ -81,15 +78,14 @@ if (uri_string() != "") {
                             <?= $this->renderSection('content') ?>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
     </main><!-- End #main -->
 
-    <!-- ======= Footer ======= -->
     <?= $this->include('components/footer') ?>
-    <!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
