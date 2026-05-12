@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class AuthController extends BaseController
 {
     public function __construct()
@@ -16,31 +18,36 @@ class AuthController extends BaseController
             $username = $this->request->getVar('username');
             $password = $this->request->getVar('password');
 
-            $dataUser = [
-                'username' => 'april',
-                'password' => '202cb962ac59075b964b07152d234b70', // 123
-                'role' => 'admin'
-            ];
+            $userModel = new UserModel();
+            $user = $userModel->where('username', $username)->first();
 
-            if ($username == $dataUser['username']) {
-
-                if (md5($password) == $dataUser['password']) {
-
-                    session()->set([
-                        'username' => $dataUser['username'],
-                        'role' => $dataUser['role'],
-                        'isLoggedIn' => true
-                    ]);
-
-                    return redirect()->to('/');
-                } else {
-                    session()->setFlashdata('failed', 'Password salah');
-                    return redirect()->back();
-                }
-            } else {
+            if (!$user) {
                 session()->setFlashdata('failed', 'Username tidak ditemukan');
                 return redirect()->back();
             }
+
+            $passwordMatches = false;
+
+            if (password_verify($password, $user['password'])) {
+                $passwordMatches = true;
+            } elseif (md5($password) === $user['password']) {
+                $passwordMatches = true;
+            }
+
+            if ($passwordMatches) {
+                session()->set([
+                    'username' => $user['username'],
+                    'role' => $user['role'],
+                    'email' => $user['email'],
+                    'isLoggedIn' => true,
+                    'login_time' => date('Y-m-d H:i:s')
+                ]);
+
+                return redirect()->to('/');
+            }
+
+            session()->setFlashdata('failed', 'Password salah');
+            return redirect()->back();
         }
 
         return view('v_login');

@@ -175,15 +175,15 @@
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Kevin Anderson</h6>
-                        <span>Web Designer</span>
+                        <h6><?= session()->get('username') ?: 'User' ?></h6>
+                        <span><?= ucfirst(session()->get('role') ?: 'User') ?></span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="<?= base_url('user') ?>">
                             <i class="bi bi-person"></i>
                             <span>My Profile</span>
                         </a>
@@ -193,7 +193,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="#">
                             <i class="bi bi-gear"></i>
                             <span>Account Settings</span>
                         </a>

@@ -29,6 +29,34 @@
         <?php
         }
         ?>
+
+        <?php
+        if (session()->get('role') == 'manager') {
+        ?>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'pemasukan') ? "" : "collapsed" ?>" href="pemasukan">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>Pemasukan</span>
+                </a>
+            </li><!-- End Pemasukan Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'pengeluaran') ? "" : "collapsed" ?>" href="pengeluaran">
+                    <i class="bi bi-wallet"></i>
+                    <span>Pengeluaran</span>
+                </a>
+            </li><!-- End Pengeluaran Nav -->
+        <?php
+        }
+        ?>
+        <?php if (session()->get('role') == 'staf' || session()->get('role') == 'manager') : ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/stok">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Cek Stok Barang</span>
+                </a>
+            </li>
+        <?php endif; ?>
     </ul>
 
 </aside><!-- End Sidebar-->
