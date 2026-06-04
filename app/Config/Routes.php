@@ -12,7 +12,13 @@ $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::login');
 $routes->get('logout', 'AuthController::logout');
 
-$routes->get('produk', 'ProdukController::index', ['filter' => 'auth']);
+// CRUD Produk
+$routes->group('produk', ['filter' => 'auth'], function ($routes) { 
+    $routes->get('', 'ProdukController::index');
+    $routes->post('', 'ProdukController::create');
+    $routes->post('edit/(:any)', 'ProdukController::edit/$1');
+    $routes->get('delete/(:any)', 'ProdukController::delete/$1');
+});
 $routes->get('keranjang', 'KeranjangController::index', ['filter' => 'auth']);
 $routes->get('pemasukan', 'PemasukanPengeluaranController::pemasukan', ['filter' => 'auth']);
 $routes->get('pengeluaran', 'PemasukanPengeluaranController::pengeluaran', ['filter' => 'auth']);

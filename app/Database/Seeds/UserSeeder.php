@@ -9,7 +9,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create('id_ID');
-
         for ($i = 0; $i < 10; $i++) {
             $data = [
                 'username' => $faker->userName,

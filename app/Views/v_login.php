@@ -7,7 +7,7 @@ $username = [
     'id' => 'username',
     'class' => 'form-control',
     'required' => true,
-    'minlength' => 6
+    'minlength' => 3
 ];
 
 $password = [
@@ -15,7 +15,7 @@ $password = [
     'id' => 'password',
     'class' => 'form-control',
     'required' => true,
-    'minlength' => 7
+    'minlength' => 6
 ];
 ?>
 

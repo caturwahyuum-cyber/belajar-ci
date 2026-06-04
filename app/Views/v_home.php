@@ -7,10 +7,10 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"><?= esc($item['name']) ?></h5>
-                        <p class="card-text">Harga: <?= esc($item['price']) ?></p>
-                        <?php if (isset($item['stock'])) : ?>
-                            <p class="card-text">Stok: <?= esc($item['stock']) ?></p>
+                        <h5 class="card-title"><?= esc($item['nama']) ?></h5>
+                        <p class="card-text">Harga: <?= esc($item['harga']) ?></p>
+                        <?php if (isset($item['jumlah'])) : ?>
+                            <p class="card-text">Stok: <?= esc($item['jumlah']) ?></p>
                         <?php endif ?>
                         <?php if (! empty($item['description'])) : ?>
                             <p class="card-text"><?= esc($item['description']) ?></p>
