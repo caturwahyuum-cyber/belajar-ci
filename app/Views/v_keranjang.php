@@ -78,7 +78,8 @@ if (session()->getFlashData('success')) {
     <div>
         <?php if (!empty($items)) : ?>
             <button type="submit" class="btn btn-primary me-2">Perbarui Keranjang</button>
-            <a class="btn btn-warning text-white" href="<?= base_url('keranjang/clear') ?>">Kosongkan Keranjang</a>
+            <a class="btn btn-warning text-white me-2" href="<?= base_url('keranjang/clear') ?>">Kosongkan Keranjang</a>
+            <a class="btn btn-success" href="<?= base_url('checkout') ?>">Selesai Belanja</a>
         <?php endif; ?>
     </div>
 </div>

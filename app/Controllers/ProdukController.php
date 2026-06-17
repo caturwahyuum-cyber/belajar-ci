@@ -3,20 +3,22 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-<<<<<<< Updated upstream
-use CodeIgniter\HTTP\ResponseInterface;
-=======
 use App\Models\ProductModel;
 use Dompdf\Dompdf;
->>>>>>> Stashed changes
 
 class ProdukController extends BaseController
 {
+    protected $productModel;
+    protected $helpers = ['form'];
+
+    public function __construct()
+    {
+        // Initialize Product Model
+        $this->productModel = new ProductModel();
+    }
+
     public function index()
     {
-<<<<<<< Updated upstream
-        return view('v_produk.php');
-=======
         return view('produk/index', [
             'products' => $this->productModel->findAll()
         ]);
@@ -80,8 +82,8 @@ class ProdukController extends BaseController
         $this->productModel->delete($id);
 
         return redirect('produk')->with('success', 'Data Berhasil Dihapus');
->>>>>>> Stashed changes
     }
+
     public function download()
     {
         // Ambil data produk dari database

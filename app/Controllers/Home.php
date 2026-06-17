@@ -2,13 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\ProductModel;
+
 class Home extends BaseController
 {
-    public function index(): string
+    protected $productModel;
+
+    public function __construct()
     {
-<<<<<<< Updated upstream
-        return view('v_home.php');
-=======
         $this->productModel = new ProductModel();
     }
 
@@ -18,6 +19,5 @@ class Home extends BaseController
         return view('v_home', [
             'products' => $this->productModel->findAll()
         ]);
->>>>>>> Stashed changes
     }
 }
