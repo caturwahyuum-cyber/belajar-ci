@@ -29,6 +29,7 @@ $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
 });
 $routes->get('checkout', 'TransaksiController::checkout', ['filter' => 'auth']);
 $routes->post('buy', 'TransaksiController::buy', ['filter' => 'auth']);
+$routes->get('history', 'TransaksiController::history', ['filter' => 'auth']);
 $routes->get('ajax/destinations', 'TransaksiController::destinations', ['filter' => 'auth']);
 $routes->get('ajax/costs', 'TransaksiController::costs', ['filter' => 'auth']);
 
@@ -37,3 +38,6 @@ $routes->get('pengeluaran', 'PemasukanPengeluaranController::pengeluaran', ['fil
 $routes->get('stok', 'StokBarangController::index', ['filter' => 'auth']);
 $routes->get('user', 'UserController::index', ['filter' => 'auth']);
 $routes->get('download', 'ProdukController::download');
+
+$routes->resource('api/products', ['controller' => 'Api\ProdukController']);
+$routes->get('api/transactions', 'Api\TransaksiController::index');

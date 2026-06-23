@@ -11,11 +11,15 @@ use App\Services\RajaOngkirService;
 class TransaksiController extends BaseController
 {
     protected $cart;
+    protected $transactionModel;
+    protected $transactionDetailModel;
 
     public function __construct()
     {
         helper(['number', 'form']);
         $this->cart = service('cart');
+        $this->transactionModel = new TransactionModel();
+        $this->transactionDetailModel = new TransactionDetailModel();
     }
 
     public function index()
@@ -197,5 +201,23 @@ class TransaksiController extends BaseController
         }
 
         return redirect()->back()->withInput()->with('failed', 'Gagal memproses pesanan Anda.');
+    }
+
+    public function history()
+    {
+        $username = session()->get('username'); 
+     
+        $transactions = $this->transactionModel->where('username', $username)->findAll();
+        $transactionIds = array_column($transactions, 'id');
+    
+        $products = $this->transactionDetailModel->getProductsByTransactionIds($transactionIds);
+    
+        $data = [
+            'username'      => $username,
+            'transactions'  => $transactions,
+            'products'      => $products
+        ]; 
+    
+        return view('v_history', $data);
     }
 }
