@@ -16,7 +16,7 @@ class TransaksiController extends BaseController
 
     public function __construct()
     {
-        helper(['number', 'form']);
+        helper(['number', 'form', 'transaksi']);
         $this->cart = service('cart');
         $this->transactionModel = new TransactionModel();
         $this->transactionDetailModel = new TransactionDetailModel();
@@ -165,24 +165,51 @@ class TransaksiController extends BaseController
 
         $streetAddress = $this->request->getPost('alamat');
         $kelurahanName = $this->request->getPost('kelurahan_name');
-        $fullAddress = $streetAddress . ', ' . $kelurahanName;
+        $fullAddress   = $streetAddress . ', ' . $kelurahanName;
 
-        $transactionModel = new TransactionModel();
+        // --- Kalkulasi Biaya ---
+        // 1. Subtotal belanja (hanya harga produk)
+        $subtotal_belanja = (float) $this->cart->total();
+
+        // 2. Kupon diskon
+        $kupon_code   = strtoupper(trim($this->request->getPost('kupon_code') ?? ''));
+        $diskon_kupon = hitung_diskon_kupon($subtotal_belanja, $kupon_code);
+
+        // 3. Subtotal setelah diskon kupon
+        $subtotal_setelah_diskon = $subtotal_belanja - $diskon_kupon;
+
+        // 4. PPN 12% dari subtotal setelah diskon
+        $ppn = hitung_ppn($subtotal_setelah_diskon);
+
+        // 5. Biaya admin berjenjang dari subtotal setelah diskon
+        $biaya_admin = hitung_biaya_admin($subtotal_setelah_diskon);
+
+        // 6. Ongkos kirim dari form
+        $ongkir = (float) $this->request->getPost('ongkir');
+
+        // 7. Grand total
+        $grand_total = $subtotal_setelah_diskon + $ppn + $biaya_admin + $ongkir;
+
+        $transactionModel      = new TransactionModel();
         $transactionDetailModel = new TransactionDetailModel();
 
-        // 1. Insert into transaction table
+        // Insert ke tabel transaction
         $transactionData = [
-            'username'    => $this->request->getPost('username'),
-            'total_harga' => $this->request->getPost('total_harga'),
-            'alamat'      => $fullAddress,
-            'ongkir'      => $this->request->getPost('ongkir'),
-            'status'      => 'Pending'
+            'username'     => $this->request->getPost('username'),
+            'total_harga'  => $grand_total,
+            'alamat'       => $fullAddress,
+            'ongkir'       => $ongkir,
+            'status'       => 'Pending',
+            'ppn'          => $ppn,
+            'biaya_admin'  => $biaya_admin,
+            'kupon_code'   => $kupon_code !== '' ? $kupon_code : null,
+            'diskon_kupon' => $diskon_kupon,
         ];
 
         $transactionId = $transactionModel->insert($transactionData);
 
         if ($transactionId) {
-            // 2. Insert into transaction_detail table
+            // Insert detail produk
             foreach ($this->cart->contents() as $item) {
                 $detailData = [
                     'transaction_id' => $transactionId,
@@ -194,10 +221,10 @@ class TransaksiController extends BaseController
                 $transactionDetailModel->insert($detailData);
             }
 
-            // 3. Destroy cart
+            // Kosongkan keranjang
             $this->cart->destroy();
 
-            return redirect()->to(base_url('/'))->with('success', 'Pesanan Anda berhasil dibuat dengan status Pending.');
+            return redirect()->to(base_url('history'))->with('success', 'Pesanan Anda berhasil dibuat! Silakan cek riwayat transaksi Anda.');
         }
 
         return redirect()->back()->withInput()->with('failed', 'Gagal memproses pesanan Anda.');

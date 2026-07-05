@@ -30,9 +30,9 @@ class TransactionDetailModel extends Model
             return [];
         }
 
-        $details = $this->select('transaction_detail.*, product.nama, product.harga, product.foto')
-            ->join('product', 'transaction_detail.product_id = product.id')
-            ->whereIn('transaction_id', $transactionIds)
+        $details = $this->select('transaction_detail.*, products.nama, products.harga, products.foto')
+            ->join('products', 'transaction_detail.product_id = products.id', 'left')
+            ->whereIn('transaction_detail.transaction_id', $transactionIds)
             ->findAll();
 
         $products = [];
