@@ -178,11 +178,11 @@ class TransaksiController extends BaseController
         // 3. Subtotal setelah diskon kupon
         $subtotal_setelah_diskon = $subtotal_belanja - $diskon_kupon;
 
-        // 4. PPN 12% dari subtotal setelah diskon
-        $ppn = hitung_ppn($subtotal_setelah_diskon);
+        // 4. PPN 12% dari subtotal belanja (sebelum diskon)
+        $ppn = hitung_ppn($subtotal_belanja);
 
-        // 5. Biaya admin berjenjang dari subtotal setelah diskon
-        $biaya_admin = hitung_biaya_admin($subtotal_setelah_diskon);
+        // 5. Biaya admin berjenjang dari subtotal belanja (sebelum diskon)
+        $biaya_admin = hitung_biaya_admin($subtotal_belanja);
 
         // 6. Ongkos kirim dari form
         $ongkir = (float) $this->request->getPost('ongkir');
