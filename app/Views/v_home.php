@@ -20,7 +20,7 @@ if (session()->getFlashData('success')) {
                     <div class="card-body p-3">
                         <div class="row align-items-center">
                             <div class="col-md-4 text-center">
-                                <?php if ($item['foto'] != '' and file_exists("img/" . $item['foto'] . "")) : ?>
+                                <?php if ($item['foto'] != '' and file_exists(ROOTPATH . "public/img/" . $item['foto'])) : ?>
                                     <img src="<?php echo base_url() . "img/" . $item['foto'] ?>" class="img-fluid rounded-3 border" style="max-height: 120px; object-fit: cover;">
                                 <?php else : ?>
                                     <div class="bg-white border rounded-3 d-flex align-items-center justify-content-center" style="height: 120px;">

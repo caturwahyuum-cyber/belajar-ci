@@ -36,7 +36,7 @@ class ProdukController extends BaseController
 
         if ($dataFoto->isValid()) {
             $fileName = $dataFoto->getRandomName();
-            $dataFoto->move('img/', $fileName);
+            $dataFoto->move(ROOTPATH . 'public/img/', $fileName);
 
             $dataForm['foto'] = $fileName;
         }
@@ -57,15 +57,15 @@ class ProdukController extends BaseController
         ];
 
         if ($this->request->getPost('check') == 1) {
-            if ($dataProduk['foto'] != '' and file_exists("img/" . $dataProduk['foto'] . "")) {
-                unlink("img/" . $dataProduk['foto']);
+            if ($dataProduk['foto'] != '' and file_exists(ROOTPATH . 'public/img/' . $dataProduk['foto'])) {
+                unlink(ROOTPATH . 'public/img/' . $dataProduk['foto']);
             }
 
             $dataFoto = $this->request->getFile('foto');
 
             if ($dataFoto->isValid()) {
                 $fileName = $dataFoto->getRandomName();
-                $dataFoto->move('img/', $fileName);
+                $dataFoto->move(ROOTPATH . 'public/img/', $fileName);
 
                 $dataForm['foto'] = $fileName;
             }

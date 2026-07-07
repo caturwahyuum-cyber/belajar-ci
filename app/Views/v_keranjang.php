@@ -39,7 +39,7 @@ if (session()->getFlashData('success')) {
                 <tr>
                     <td><?= esc($item['name']) ?></td>
                     <td>
-                        <?php if (isset($item['options']['foto']) && $item['options']['foto'] != '' && file_exists("img/" . $item['options']['foto'])) : ?>
+                        <?php if (isset($item['options']['foto']) && $item['options']['foto'] != '' && file_exists(ROOTPATH . "public/img/" . $item['options']['foto'])) : ?>
                             <img src="<?= base_url() . "img/" . $item['options']['foto'] ?>" width="100px" class="img-thumbnail">
                         <?php else : ?>
                             <span class="text-muted">Tidak ada gambar</span>

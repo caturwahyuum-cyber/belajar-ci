@@ -51,7 +51,7 @@ foreach ($products as $index => $produk) : ?>
                     </div>
 
                     <div class="mb-3">
-                        <?php if ($produk['foto'] != '' and file_exists("img/" . $produk['foto'] . "")) : ?>
+                        <?php if ($produk['foto'] != '' and file_exists(ROOTPATH . "public/img/" . $produk['foto'])) : ?>
                             <img src="<?= base_url('img/' . $produk['foto']); ?>" width="100">
                         <?php endif; ?>
                     </div>
